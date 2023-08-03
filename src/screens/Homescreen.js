@@ -12,7 +12,7 @@ import moment from 'moment'
 
 const { RangePicker } = DatePicker;
 
-
+const API_URL = process.env.REACT_APP_API_URL;
 function Homescreen() {
 
     const [rooms, setRooms] = useState([]);
@@ -32,7 +32,7 @@ function Homescreen() {
         try {
             setLoading(true)
 
-            const data = (await axios.get('/api/rooms/getallrooms')).data
+            const data = (await axios.get(`${API_URL}/api/rooms/getallrooms`)).data
             // console.log(data);
             setRooms(data);
             setDuplicateRooms(data);
@@ -52,6 +52,7 @@ function Homescreen() {
         var tempRooms = []
 
         for (const room of duplicateRooms) {
+            
             var availability = false
 
             if (room.currentbookings.length > 0) {
@@ -139,7 +140,7 @@ function Homescreen() {
                     rooms.map(room => {
 
                         return <div className="col-md-9 mt-3">
-                            <Room room={room} fromDate={fromDate} toDate={toDate} />
+                            <Room key={room.id} room={room} fromDate={fromDate} toDate={toDate} />
                         </div>
 
                     })

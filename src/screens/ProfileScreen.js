@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { Tag } from 'antd';
 
 const { TabPane } = Tabs;
+
+const API_URL = process.env.REACT_APP_API_URL;
 function ProfileScreen() {
 
     const user = JSON.parse(localStorage.getItem("currentUser"))
@@ -56,8 +58,8 @@ export function MyBookings() {
     // eslint-disable-next-line
     useEffect(async () => {
 
-        try {            setLoading(true)
-            const data = await (await axios.post('/api/bookings/getbookingsbyuserid', { userid: user._id })).data
+        try {setLoading(true)
+            const data = await (await axios.post(`${API_URL}/api/bookings/getbookingsbyuserid`, { userid: user._id })).data
             // console.log(data);
 
             setBookings(data);
@@ -78,7 +80,7 @@ export function MyBookings() {
         try {
             
             setLoading(true)
-            const result = await (await axios.post("/api/bookings/cancelbooking", {bookingid , roomid})).data
+            const result = await (await axios.post(`${API_URL}/api/bookings/cancelbooking`, {bookingid , roomid})).data
             console.log(result)
             setLoading(false)
             Swal.fire('Cancelled' , 'Your booking has been cancelled' , 'success').then(result=> {

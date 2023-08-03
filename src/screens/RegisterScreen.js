@@ -5,6 +5,8 @@ import Loader from '../components/Loader';
 import Error from '../components/Error';
 import Success from '../components/Success'
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function RegisterScreen() {
 
     const [name, setName] = useState('');
@@ -29,7 +31,7 @@ function RegisterScreen() {
             try {
                 setLoading(true);
                 // eslint-disable-next-line
-                const result = await axios.post('/api/users/register', user).data
+                const result = await axios.post(`${API_URL}/api/users/register`, user).data
                 setLoading(false);
                 setSuccess(true);
 

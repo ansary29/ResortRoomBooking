@@ -8,6 +8,9 @@ import Loader from '../components/Loader';
 import Error from '../components/Error';
 import Swal from 'sweetalert2'
 
+const API_URL = process.env.REACT_APP_API_URL;
+
+
 const { TabPane } = Tabs;
 
 function Adminscreen() {
@@ -59,7 +62,7 @@ export function Bookings() {
 
 
         try {
-            const data = await (await axios.get('/api/bookings/getallbookings')).data
+            const data =  (await axios.get(`${API_URL}/api/bookings/getallbookings`)).data
             setBookings(data)
             setLoading(false)
         } catch (error) {
@@ -127,7 +130,7 @@ export function Rooms() {
 
 
         try {
-            const data = await (await axios.get('/api/rooms/getallrooms')).data
+            const data = await (await axios.get(`${API_URL}/api/rooms/getallrooms`)).data
             setRooms(data)
             setLoading(false)
         } catch (error) {
@@ -199,7 +202,7 @@ export function Users() {
 
 
         try {
-            const data = await (await axios.get('/api/users/getallusers')).data
+            const data = await (await axios.get(`${API_URL}/api/users/getallusers`)).data
             setUsers(data)
             setLoading(false)
         } catch (error) {
@@ -285,7 +288,7 @@ export function Addroom(){
 
         try {
             setLoading(true);
-            const result = await (await axios.post('/api/rooms/addroom' , newroom)).data
+            const result = await (await axios.post(`${API_URL}/api/rooms/addroom` , newroom)).data
             console.log(result)
             setLoading(false)
             Swal.fire('Congratulations' , 'Room Added Successfully' , 'success').then(result => {

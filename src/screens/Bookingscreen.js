@@ -6,6 +6,10 @@ import moment from 'moment';
 import StripeCheckout from 'react-stripe-checkout';
 import Swal from 'sweetalert2';
 
+
+
+const API_URL = process.env.REACT_APP_API_URL;
+
 function Bookingscreen({ match }) {
 
     const [loading, setLoading] = useState(true);
@@ -29,7 +33,7 @@ function Bookingscreen({ match }) {
 
         try {
             setLoading(true)
-            const data = (await axios.post("/api/rooms/getroombyid", { roomid: match.params.roomid })).data;
+            const data = (await axios.post(`${API_URL}/api/rooms/getroombyid`, { roomid: match.params.roomid })).data;
             setTotalAmount(data.rentperday * totalDays);
             setRoom(data);
             setLoading(false);
@@ -59,7 +63,7 @@ function Bookingscreen({ match }) {
         try {
             setLoading(true)
             // eslint-disable-next-line 
-            const result = await axios.post('/api/bookings/bookroom', bookingDetails)
+            const result = await axios.post(`${API_URL}/api/bookings/bookroom`, bookingDetails)
             setLoading(false)
             Swal.fire('Congratulations' , 'Your Room Booked Successfully' , 'success').then(result => {
                 window.location.href='/profile'
